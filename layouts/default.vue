@@ -13,9 +13,9 @@
     </v-avatar>
     <span class="tex0t-h6">Neural Translate</span>
     <v-spacer />
-    <v-btn x-large text plain class="text-h6 font-weight-light">Log In</v-btn>
-    <v-btn x-large text plain class="text-h6 font-weight-light">Sign Up</v-btn>
-    <v-avatar height="50" class="mr-6" color="accent">
+    <v-btn large text plain class="text-h6 font-weight-light mx-1">Log In</v-btn>
+    <v-btn large text plain class="text-h6 font-weight-light mx-1">Sign Up</v-btn>
+    <v-avatar height="50" class="mx-6" color="accent">
       DS
     </v-avatar>
     </v-app-bar>
