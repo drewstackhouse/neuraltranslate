@@ -14,7 +14,7 @@
               height="75"
               tile
               block
-              class="lang-btn text-h6 font-weight-bold lang-btn"
+              class="lang-btn text-h6 font-weight-regular lang-btn"
               >{{ sourceLang ? sourceLang.language : ""
               }}<v-icon v-if="sourceLang" class="ml-3"
                 >mdi-chevron-down</v-icon
@@ -55,7 +55,7 @@
           x-large
           tile
           block
-          class="lang-btn text-h6 font-weight-bold"
+          class="lang-btn text-h6 font-weight-regular"
           >{{ targetLang ? targetLang.language : ""
           }}<v-icon v-if="targetLang" class="ml-3"
             >mdi-chevron-down</v-icon
@@ -110,14 +110,14 @@
             ></v-textarea>
           </v-col>
           <v-col cols="12" class="text-right">
-            <v-btn icon class="my-1 mx-2"
-              ><v-icon large>mdi-thumb-up-outline</v-icon></v-btn
+            <v-btn x-large icon class="my-1 mx-1"
+              ><v-icon>mdi-thumb-up-outline</v-icon></v-btn
             >
-            <v-btn icon class="my-1 mx-2"
-              ><v-icon large>mdi-thumb-down-outline</v-icon></v-btn
+            <v-btn x-large icon class="my-1 mx-1"
+              ><v-icon>mdi-thumb-down-outline</v-icon></v-btn
             >
-            <v-btn icon class="my-1 mx-2"><v-icon large>mdi-content-copy</v-icon></v-btn>
-            <v-btn icon class="my-1 mx-2"><v-icon large>mdi-share-variant</v-icon></v-btn>
+            <v-btn x-large icon class="my-1 mx-1"><v-icon>mdi-content-copy</v-icon></v-btn>
+            <v-btn x-large icon class="my-1 mx-1"><v-icon>mdi-share-variant</v-icon></v-btn>
           </v-col>
         </v-row>
       </v-col>
