@@ -1,7 +1,6 @@
 <template>
   <v-container>
-    <v-btn @click="translateAll">Translate</v-btn>
-    <v-card elevation="8" class="ma-12 px-0" tile>
+    <v-card elevation="8" class="ma-12 px-0 transparent" tile>
       <v-row justify="center" align="center" no-gutters class="mx-0">
         <v-col cols="5.5">
           <v-menu offset-y>
@@ -84,7 +83,7 @@
       <v-divider />
       <v-row justify="center" align="center" class="mx-0">
         <v-col cols="6" class="px-0">
-          <v-row no-gutters class="">
+          <v-row no-gutters>
             <v-col cols="12">
               <v-textarea
                 placeholder="Start typing..."
@@ -96,6 +95,7 @@
                 no-resize
                 solo
                 flat
+                background-color="transparent"
                 class="text-h5 pa-1"
               ></v-textarea>
             </v-col>
@@ -116,6 +116,7 @@
                 no-resize
                 solo
                 flat
+                background-color="transparent"
                 class="text-h5 pa-1"
                 placeholder="Translation"
               ></v-textarea>
@@ -146,10 +147,6 @@ import { mapGetters, mapMutations } from "vuex";
 import { debounce } from "lodash";
 
 export default {
-  async beforeCreate() {
-    await this.$store.dispatch("loadLanguages");
-  },
-
   data: () => ({
     pendingInput: "",
     debounceTime: 100,
@@ -158,23 +155,6 @@ export default {
     this.debounceInput = debounce(this.setInput, this.debounceTime);
   },
   computed: {
-    codes() {
-      /*if (this.availableLangs) {
-        let pairCodes = [];
-        for (var i = 0; i < this.sourceOptions.length; i++) {
-          let currentSourceId = this.sourceOptions[i].id;
-          let currentSourceCode = this.sourceOptions[i].code;
-          let currentTargetIds = this.availableLangs[currentSourceId];
-          let currentTargetCodes = currentTargetIds.map(x => this.langIndex.filter(y => y.id === x)[0].code);
-          currentTargetCodes.forEach(tar => pairCodes.push(`${currentSourceCode}${tar}`));
-        }
-        return pairCodes
-      } else {
-        return null
-      }*/
-      return this.pairCodes;
-    },
-
     ...mapGetters({
       pairCodes: "getPairCodes",
       sourceLang: "getSourceLang",
@@ -196,15 +176,6 @@ export default {
   },
   methods: {
     ...mapMutations(["swapLangs", "setInput"]),
-    async translateAll() {
-      const start = Date.now()
-      for (let i=0; i<this.pairCodes.length; i++) {
-        const res = await this.$axios.get(`${this.$axios.defaults.baseURL}${this.pairCodes[i]}?text=${this.input}`);
-        console.log(res.data.translation)
-      }
-      const end = Date.now()
-      console.log(`Done in ${(end - start)/1000} seconds`)
-    }
   },
   watch: {
     pendingInput: function (newInput) {

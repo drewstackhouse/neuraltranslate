@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <v-main>
-      <v-fade-transition mode="out-in"> 
+    <v-main class="grey darken-4">
+      <v-fade-transition mode="out-in">
         <Nuxt />
       </v-fade-transition>
     </v-main>
@@ -10,12 +10,9 @@
 
 <script>
 export default {
-  data: () => ({
-  
-  })
-}
+  data: () => ({}),
+};
 </script>
 
 <style>
-
 </style>

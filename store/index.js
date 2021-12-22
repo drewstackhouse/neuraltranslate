@@ -95,7 +95,8 @@ export const mutations = {
 };
 
 export const actions = {
-  async loadLanguages({ commit, dispatch, state }) {
+
+  async loadLanguages({ commit, dispatch }) {
     const res = await this.$axios.get(
       "https://qp2dlboe9l.execute-api.us-east-1.amazonaws.com/prod"
     );
