@@ -47,6 +47,10 @@ export default {
     '@nuxtjs/axios'
   ],
 
+  axios: {
+    baseURL:"https://fkj26u69ic.execute-api.us-east-1.amazonaws.com/prod/"
+  },
+
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
     treeShake: false,
