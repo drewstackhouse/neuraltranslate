@@ -21,12 +21,12 @@
           :show-arrows="false"
           interval="2500"
           touchless
-          :height="mobile ? 50 : 100"
+          :height="mobile ? 75 : 100"
         >
-          <v-carousel-item v-for="(msg, i) in messages" :key="i">
+          <v-carousel-item v-for="(msg, i) in messages" :key="i" >
             <p
               :class="
-                mobile ? 'text-h6 mb-12 font-weight-regular' : 'text-h5 mb-12'
+                mobile ? 'text-h6 mb-12 font-weight-regular text--secondary' : 'text-h4 mb-12 text--secondary'
               "
             >
               {{ msg }}
