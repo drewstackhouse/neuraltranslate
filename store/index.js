@@ -96,6 +96,10 @@ export const mutations = {
 
 export const actions = {
 
+  async setInputAndTranslate({ commit, dispatch}, input) {
+    await commit('setInput', input);
+    await dispatch('translateInput');
+  },
   async loadLanguages({ commit, dispatch }) {
     const res = await this.$axios.get(
       "https://qp2dlboe9l.execute-api.us-east-1.amazonaws.com/prod"
@@ -138,5 +142,20 @@ export const actions = {
       );
     }
     await commit("setPairCodes", pairCodes);
+  },
+
+  async translateInput({ commit, state }) {
+    const input = state.input;
+    const pairCode = `${state.sourceLang.code}${state.targetLang.code}`;
+    const requestURL = `${this.$axios.defaults.baseURL}${pairCode}?text=${input}`
+
+    try {
+      const res = await this.$axios.get(requestURL);
+      const translation = res.data.translation;
+      commit('setOutput', translation)
+    } catch (e) {
+      console.error(`Something went wrong: ${e}`);
+      return "";
+    }
   },
 };
