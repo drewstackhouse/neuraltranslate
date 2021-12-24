@@ -8,7 +8,7 @@
         <v-img src="neuraltranslate.png" max-width="200" class="mx-auto" />
       </v-col>
       <v-col :cols="mobile ? 12 : ''" class="text-center">
-        <span :class="mobile ? 'text-h3' : 'text-h1'">Neural Translate</span>
+        <span :class="mobile ? 'text-h3' : 'text-h2'">Neural Translate</span>
       </v-col>
       <v-col cols="1"></v-col>
     </v-row>

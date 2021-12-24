@@ -6,7 +6,6 @@ export const state = () => ({
   targetLang: null,
   targetOptions: null,
   pairCodes: null,
-  swapEnabled: null,
   input: null,
   output: null,
 });
@@ -26,12 +25,6 @@ export const getters = {
   },
   getPairCodes(state) {
     return state.pairCodes;
-  },
-  getSwapEnabled(state) {
-    return (
-      Object.keys(state.availableLangs).includes(state.targetLang.id) &&
-      state.availableLangs[state.targetLang.id].includes(state.sourceLang.id)
-    );
   },
   getSourceOptions(state) {
     return state.sourceOptions;

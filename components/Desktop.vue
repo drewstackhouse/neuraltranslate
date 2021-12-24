@@ -11,24 +11,46 @@
               text
               tile
               block
-              >{{ sourceLang.language }}</v-btn
+              :color="showSourceLangs ? 'red accent-1' : ''"
+              >{{ showSourceLangs ? 'Select Language' : sourceLang.language}}</v-btn
             ></v-col
           >
           <v-col class="ma-0 pa-0" cols="1"
-            ><v-btn x-large text tile block icon :disabled="!swapEnabled"
+            ><v-btn x-large text tile block icon :disabled="!swapEnabled" @click="dispatchSwapLangsAndTranslate"
               ><v-icon>mdi-swap-horizontal</v-icon></v-btn
             ></v-col
           >
           <v-col class="ma-0 pa-0" cols="5.5"
-            ><v-btn x-large text tile block>{{
-              targetLang.language
+            ><v-btn @click="showTargetLangs = !showTargetLangs" x-large text tile block :color="showTargetLangs ? 'red accent-1' : ''">{{
+              showTargetLangs ? 'Select Language' : targetLang.language
             }}</v-btn></v-col
           >
         </v-row>
         <v-divider />
         <v-row class="text-center ma-0 pa-0" no-gutters style="height: 400px">
-          <v-scroll-y-reverse-transition><v-col class="ma-0 pa-0" cols="12" v-if="showSourceLangs"><v-card flat tile height="100%">Hey</v-card></v-col></v-scroll-y-reverse-transition>
-          <v-col class="ma-0 pa-0" cols="6" v-if="!showSourceLangs">
+          <v-col class="ma-0 pa-0" cols="12" v-if="showSourceLangs">
+            <v-card flat tile height="100%" class="text-left">
+                  <v-list>
+                    <v-list-item-group>
+                    <v-list-item v-for="(src, i) in sourceOptions" :key="i" class="py-3 px-12" @click="updateLangs(src, targetLang)">
+                      {{src.language}}
+                    </v-list-item>
+                    </v-list-item-group>
+                  </v-list>
+            </v-card>
+            </v-col>
+            <v-col class="ma-0 pa-0" cols="12" v-else-if="showTargetLangs">
+            <v-card flat tile height="100%" class="text-left">
+                  <v-list>
+                    <v-list-item-group>
+                    <v-list-item v-for="(tgt, i) in targetOptions" :key="i" class="py-3 px-12" @click="updateLangs(sourceLang, tgt)">
+                      {{tgt.language}}
+                    </v-list-item>
+                    </v-list-item-group>
+                  </v-list>
+            </v-card>
+            </v-col>
+          <v-col class="ma-0 pa-0" cols="6" v-if="!showSourceLangs && !showTargetLangs">
               <v-textarea
                 rows="10"
                 tile
@@ -41,8 +63,8 @@
                 v-model="pendingInput"
               ></v-textarea>
           </v-col>
-          <v-divider class="pa-0" vertical v-if="!showSourceLangs" />
-          <v-col class="ma-0 pa-0" cols="6" v-if="!showSourceLangs">
+          <v-divider class="pa-0" vertical v-if="!showSourceLangs && !showTargetLangs" />
+          <v-col class="ma-0 pa-0" cols="6" v-if="!showSourceLangs && !showTargetLangs">
             <v-textarea
               rows="10"
               tile
@@ -56,6 +78,7 @@
             ></v-textarea>
           </v-col>
         </v-row>
+        
       </v-card>
     </v-col>
     <v-col cols="1"></v-col>
@@ -71,7 +94,7 @@ export default {
     pendingInput: "",
     debounceTime: 100,
     showSourceLangs: false,
-    langColumnLength: 4
+    showTargetLangs: false
   }),
   created: function () {
     this.debounceInput = debounce(
@@ -81,33 +104,19 @@ export default {
   },
   computed: {
     ...mapGetters({
+      availableLangs: "getAvailableLangs",
       sourceLang: "getSourceLang",
       targetLang: "getTargetLang",
       sourceOptions: "getSourceOptions",
       targetOptions: "getTargetOptions",
-      swapEnabled: "getSwapEnabled",
       input: "getInput",
       output: "getOutput",
     }),
-    sourceLangColumns() {
-        if (this.targetOptions) {
-            let columns = [];
-            let sortedKeys = [...this.targetOptions].map(obj => obj.language).sort();
-            
-            let options = sortedKeys.map(key => this.targetOptions.filter(obj => obj.language === key)[0]);
-            
-            while (options.length) {
-                columns.push(
-                    options.splice(0, this.langColumnLength)
-                );
-                if (options.length) {
-                    columns.push(["/"])
-                }
-            }
-            return columns
-        } else {
-            return []
-        }
+    swapEnabled() {
+    return (
+      Object.keys(this.availableLangs).includes(this.targetLang.id.toString()) &&
+      this.availableLangs[this.targetLang.id].includes(this.sourceLang.id)
+    );
     }
   },
   methods: {
@@ -115,6 +124,21 @@ export default {
     dispatchSetInputAndTranslate(inp) {
       this.$store.dispatch("setInputAndTranslate", inp);
     },
+    dispatchSwapLangsAndTranslate() {
+      this.swapLangs();
+      this.pendingInput = this.output;
+      this.dispatchSetInputAndTranslate(this.output);
+    },
+    async updateLangs(source, target) {
+      const payload = {
+        sourceObj: source,
+        targetObj: target
+      };
+      await this.$store.dispatch('updateLanguages', payload);
+      this.dispatchSetInputAndTranslate(this.input);
+      this.showSourceLangs = false;
+      this.showTargetLangs = false;
+    }
   },
   watch: {
     pendingInput: function (newInput) {
@@ -129,4 +153,5 @@ export default {
 </script>
 
 <style>
+
 </style>
