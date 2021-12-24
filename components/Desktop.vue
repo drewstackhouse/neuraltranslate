@@ -2,73 +2,118 @@
   <v-row align="center" justify="center">
     <v-col cols="1"></v-col>
     <v-col>
-      <v-card flat outlined tile class="ma-0 pa-0" v-if="sourceLang && targetLang">
+      <v-card
+        flat
+        outlined
+        tile
+        class="ma-0 pa-0"
+        v-if="sourceLang && targetLang"
+      >
         <v-row class="text-center ma-0 pa-0" no-gutters>
           <v-col class="ma-0 pa-0" cols="5.5"
             ><v-btn
-            @click="showSourceLangs = !showSourceLangs"
+              @click="showSourceLangs = !showSourceLangs"
               x-large
               text
               tile
               block
               :color="showSourceLangs ? 'red accent-1' : ''"
-              >{{ showSourceLangs ? 'Select Language' : sourceLang.language}}</v-btn
+              >{{
+                showSourceLangs ? "Select Language" : sourceLang.language
+              }}</v-btn
             ></v-col
           >
           <v-col class="ma-0 pa-0" cols="1"
-            ><v-btn x-large text tile block icon :disabled="!swapEnabled" @click="dispatchSwapLangsAndTranslate"
+            ><v-btn
+              x-large
+              text
+              tile
+              block
+              icon
+              :disabled="!swapEnabled"
+              @click="dispatchSwapLangsAndTranslate"
               ><v-icon>mdi-swap-horizontal</v-icon></v-btn
             ></v-col
           >
           <v-col class="ma-0 pa-0" cols="5.5"
-            ><v-btn @click="showTargetLangs = !showTargetLangs" x-large text tile block :color="showTargetLangs ? 'red accent-1' : ''">{{
-              showTargetLangs ? 'Select Language' : targetLang.language
-            }}</v-btn></v-col
+            ><v-btn
+              @click="showTargetLangs = !showTargetLangs"
+              x-large
+              text
+              tile
+              block
+              :color="showTargetLangs ? 'red accent-1' : ''"
+              >{{
+                showTargetLangs ? "Select Language" : targetLang.language
+              }}</v-btn
+            ></v-col
           >
         </v-row>
         <v-divider />
         <v-row class="text-center ma-0 pa-0" no-gutters style="height: 400px">
           <v-col class="ma-0 pa-0" cols="12" v-if="showSourceLangs">
             <v-card flat tile height="100%" class="text-left">
-                  <v-list>
-                    <v-list-item-group>
-                    <v-list-item v-for="(src, i) in sourceOptions" :key="i" class="py-3 px-12" @click="updateLangs(src, targetLang)">
-                      {{src.language}}
-                    </v-list-item>
-                    </v-list-item-group>
-                  </v-list>
+              <v-list>
+                <v-list-item-group>
+                  <v-list-item
+                    v-for="(src, i) in sourceOptions"
+                    :key="i"
+                    class="py-3 px-12"
+                    @click="updateLangs(src, targetLang)"
+                  >
+                    {{ src.language }}
+                  </v-list-item>
+                </v-list-item-group>
+              </v-list>
             </v-card>
-            </v-col>
-            <v-col class="ma-0 pa-0" cols="12" v-else-if="showTargetLangs">
-            <v-card flat tile height="100%" class="text-left">
-                  <v-list>
-                    <v-list-item-group>
-                    <v-list-item v-for="(tgt, i) in targetOptions" :key="i" class="py-3 px-12" @click="updateLangs(sourceLang, tgt)">
-                      {{tgt.language}}
-                    </v-list-item>
-                    </v-list-item-group>
-                  </v-list>
-            </v-card>
-            </v-col>
-          <v-col class="ma-0 pa-0" cols="6" v-if="!showSourceLangs && !showTargetLangs">
-              <v-textarea
-                rows="10"
-                tile
-                no-resize
-                solo
-                flat
-                clearable
-                class="text-h5 pa-3"
-                placeholder="Start typing..."
-                v-model="pendingInput"
-              ></v-textarea>
-              <v-row>
-                <v-col>
-                  </v-col>
-              </v-row>
           </v-col>
-          <v-divider style="z-index: 0; position: relative" class="pa-0" vertical v-if="!showSourceLangs && !showTargetLangs" />
-          <v-col :class="output ? 'grey darken-4 ma-0 pa-0' : 'ma-0 pa-0'" cols="6" v-if="!showSourceLangs && !showTargetLangs">
+          <v-col class="ma-0 pa-0" cols="12" v-else-if="showTargetLangs">
+            <v-card flat tile height="100%" class="text-left">
+              <v-list>
+                <v-list-item-group>
+                  <v-list-item
+                    v-for="(tgt, i) in targetOptions"
+                    :key="i"
+                    class="py-3 px-12"
+                    @click="updateLangs(sourceLang, tgt)"
+                  >
+                    {{ tgt.language }}
+                  </v-list-item>
+                </v-list-item-group>
+              </v-list>
+            </v-card>
+          </v-col>
+          <v-col
+            class="ma-0 pa-0"
+            cols="6"
+            v-if="!showSourceLangs && !showTargetLangs"
+          >
+            <v-textarea
+              rows="10"
+              tile
+              no-resize
+              solo
+              flat
+              clearable
+              class="text-h5 pa-3"
+              placeholder="Start typing..."
+              v-model="pendingInput"
+            ></v-textarea>
+            <v-row>
+              <v-col> </v-col>
+            </v-row>
+          </v-col>
+          <v-divider
+            style="z-index: 0; position: relative"
+            class="pa-0"
+            vertical
+            v-if="!showSourceLangs && !showTargetLangs"
+          />
+          <v-col
+            :class="output ? 'grey darken-4 ma-0 pa-0' : 'ma-0 pa-0'"
+            cols="6"
+            v-if="!showSourceLangs && !showTargetLangs"
+          >
             <v-textarea
               rows="10"
               tile
@@ -81,15 +126,24 @@
               readonly
               :value="output"
             ></v-textarea>
-              <v-row class="text-right mr-3">
-                <v-col>
-                  <v-btn large icon><v-icon>mdi-heart-outline</v-icon></v-btn>
-                  <v-btn large icon><v-icon>mdi-content-copy</v-icon></v-btn>
-                  <v-btn large icon><v-icon>mdi-thumb-up-outline</v-icon></v-btn>
-                  <v-btn large icon><v-icon>mdi-thumb-down-outline</v-icon></v-btn>
-                  <v-btn large icon><v-icon>mdi-share-variant-outline</v-icon></v-btn>
-                </v-col>
-              </v-row>
+            <v-row class="text-right mr-3">
+              <v-col>
+                <v-btn large icon><v-icon>mdi-heart-outline</v-icon></v-btn>
+                <v-btn @click="copyToClipboard" large icon
+                  ><v-icon>mdi-content-copy</v-icon></v-btn
+                >
+                <v-snackbar left v-model="copiedSnackbar" timeout="1000">
+                  Copied to clipboard!
+                </v-snackbar>
+                <v-btn large icon><v-icon>mdi-thumb-up-outline</v-icon></v-btn>
+                <v-btn large icon
+                  ><v-icon>mdi-thumb-down-outline</v-icon></v-btn
+                >
+                <v-btn large icon
+                  ><v-icon>mdi-share-variant-outline</v-icon></v-btn
+                >
+              </v-col>
+            </v-row>
           </v-col>
         </v-row>
       </v-card>
@@ -107,7 +161,9 @@ export default {
     pendingInput: "",
     debounceTime: 100,
     showSourceLangs: false,
-    showTargetLangs: false
+    showTargetLangs: false,
+    copiedSnackbar: false,
+    snackbarText: "",
   }),
   created: function () {
     this.debounceInput = debounce(
@@ -127,11 +183,13 @@ export default {
       output: "getOutput",
     }),
     swapEnabled() {
-    return (
-      Object.keys(this.availableLangs).includes(this.targetLang.id.toString()) &&
-      this.availableLangs[this.targetLang.id].includes(this.sourceLang.id)
-    );
-    }
+      return (
+        Object.keys(this.availableLangs).includes(
+          this.targetLang.id.toString()
+        ) &&
+        this.availableLangs[this.targetLang.id].includes(this.sourceLang.id)
+      );
+    },
   },
   methods: {
     ...mapMutations(["swapLangs", "setInput", "setOutput"]),
@@ -146,16 +204,28 @@ export default {
     async updateLangs(source, target) {
       const payload = {
         sourceObj: source,
-        targetObj: target
+        targetObj: target,
       };
-      await this.$store.dispatch('updateLanguages', payload);
+      await this.$store.dispatch("updateLanguages", payload);
       this.dispatchSetInputAndTranslate(this.input);
       this.showSourceLangs = false;
       this.showTargetLangs = false;
     },
     dispatchInitTranslate() {
-      this.$store.dispatch('initTranslate');
-    }
+      this.$store.dispatch("initTranslate");
+    },
+    copyToClipboard() {
+      navigator.clipboard
+        .writeText(this.output)
+        .then(() => {
+          this.snackbarText = "Translation copied to clipboard"
+          this.copiedSnackbar = true;
+        })
+        .catch((err) => {
+          this.snackbarText = "Sorry, we can't copy that right now."
+          this.copiedSnackbar = true;
+        });
+    },
   },
   watch: {
     pendingInput: function (newInput) {
@@ -169,6 +239,4 @@ export default {
 };
 </script>
 
-<style>
-
-</style>
+<style></style>
