@@ -133,7 +133,7 @@
                   ><v-icon>mdi-content-copy</v-icon></v-btn
                 >
                 <v-snackbar left v-model="copiedSnackbar" timeout="1000">
-                  Copied to clipboard!
+                  {{snackbarText}}
                 </v-snackbar>
                 <v-btn large icon><v-icon>mdi-thumb-up-outline</v-icon></v-btn>
                 <v-btn large icon
