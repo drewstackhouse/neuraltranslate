@@ -62,9 +62,13 @@
                 placeholder="Start typing..."
                 v-model="pendingInput"
               ></v-textarea>
+              <v-row>
+                <v-col>
+                  </v-col>
+              </v-row>
           </v-col>
-          <v-divider class="pa-0" vertical v-if="!showSourceLangs && !showTargetLangs" />
-          <v-col class="ma-0 pa-0" cols="6" v-if="!showSourceLangs && !showTargetLangs">
+          <v-divider style="z-index: 0; position: relative" class="pa-0" vertical v-if="!showSourceLangs && !showTargetLangs" />
+          <v-col :class="output ? 'grey darken-4 ma-0 pa-0' : 'ma-0 pa-0'" cols="6" v-if="!showSourceLangs && !showTargetLangs">
             <v-textarea
               rows="10"
               tile
@@ -72,13 +76,22 @@
               solo
               flat
               class="text-h5 pa-3"
+              background-color="transparent"
               placeholder="Translation"
               readonly
               :value="output"
             ></v-textarea>
+              <v-row class="text-right mr-3">
+                <v-col>
+                  <v-btn large icon><v-icon>mdi-heart-outline</v-icon></v-btn>
+                  <v-btn large icon><v-icon>mdi-content-copy</v-icon></v-btn>
+                  <v-btn large icon><v-icon>mdi-thumb-up-outline</v-icon></v-btn>
+                  <v-btn large icon><v-icon>mdi-thumb-down-outline</v-icon></v-btn>
+                  <v-btn large icon><v-icon>mdi-share-variant-outline</v-icon></v-btn>
+                </v-col>
+              </v-row>
           </v-col>
         </v-row>
-        
       </v-card>
     </v-col>
     <v-col cols="1"></v-col>

@@ -77,7 +77,7 @@ export default {
       return new Promise((res) => setTimeout(res, ms));
     },
 
-    async translate(text, pairCode) {
+/*    async translate(text, pairCode) {
       try {
         const res = await this.$axios.get(
           `${this.$axios.defaults.baseURL}${pairCode}?text=${text}`
@@ -105,7 +105,7 @@ export default {
       } catch (e) {
         console.error(`Something went wrong during initialization: ${e}`);
       }
-    },
+    }, */
   },
 
   async beforeCreate() {
@@ -115,7 +115,8 @@ export default {
   async created() {
     await this.sleep(500);
     this.showIntro = true;
-    await this.initTranslate();
+    //await this.initTranslate();
+    await this.$store.dispatch('initTranslate');
     this.$router.push({ name: "translate" });
   },
 };

@@ -139,18 +139,58 @@ export const actions = {
     await commit("setPairCodes", pairCodes);
   },
 
-  async translateInput({ commit, state }) {
+  async translateInput({ commit, dispatch, state }) {
     const input = state.input;
-    const pairCode = `${state.sourceLang.code}${state.targetLang.code}`;
+    const pair = `${state.sourceLang.code}${state.targetLang.code}`;
+    //const requestURL = `${this.$axios.defaults.baseURL}${pairCode}?text=${input}`
+
+    //try {
+    //  const res = await this.$axios.get(requestURL);
+    //  const translation = res.data.translation;
+    //  commit('setOutput', translation)
+    //} catch (e) {
+    //  console.error(`Something went wrong: ${e}`);
+     // return "";
+    //}
+    const payload = {text:input, pairCode:pair};
+    const translation = await dispatch('translate', payload);
+    commit('setOutput', translation)
+  },
+
+  async translate({state}, payload) {
+    const input = payload.text;
+    const pairCode = payload.pairCode;
     const requestURL = `${this.$axios.defaults.baseURL}${pairCode}?text=${input}`
 
     try {
       const res = await this.$axios.get(requestURL);
       const translation = res.data.translation;
-      commit('setOutput', translation)
+      return translation
     } catch (e) {
       console.error(`Something went wrong: ${e}`);
       return "";
+    }
+  },
+
+  async initTranslate({dispatch, state}) {
+    
+    try {
+      const startTime = Date.now();
+      const translations = state.pairCodes.map(async (code) =>
+        {
+          let payload = {text:"Hello.", pairCode:code};
+          dispatch('translate', payload)
+        }
+      );
+      await Promise.all(translations);
+      const endTime = Date.now();
+      console.log(
+        `Round-trip initialization took ${
+          (endTime - startTime) / 1000
+        } seconds.`
+      );
+    } catch (e) {
+      console.error(`Something went wrong during initialization: ${e}`);
     }
   },
 };
