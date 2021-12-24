@@ -2,7 +2,7 @@
   <v-row align="center" justify="center">
     <v-col cols="1"></v-col>
     <v-col>
-      <v-card flat outlined tile class="ma-0 pa-0">
+      <v-card flat outlined tile class="ma-0 pa-0" v-if="sourceLang && targetLang">
         <v-row class="text-center ma-0 pa-0" no-gutters>
           <v-col class="ma-0 pa-0" cols="5.5"
             ><v-btn
@@ -114,6 +114,7 @@ export default {
       this.dispatchSetInputAndTranslate,
       this.debounceTime
     );
+    const warmLambdas = setInterval(this.dispatchInitTranslate, 30000);
   },
   computed: {
     ...mapGetters({
@@ -151,6 +152,9 @@ export default {
       this.dispatchSetInputAndTranslate(this.input);
       this.showSourceLangs = false;
       this.showTargetLangs = false;
+    },
+    dispatchInitTranslate() {
+      this.$store.dispatch('initTranslate');
     }
   },
   watch: {

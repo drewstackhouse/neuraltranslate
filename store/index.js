@@ -8,9 +8,13 @@ export const state = () => ({
   pairCodes: null,
   input: null,
   output: null,
+  initialized: false,
 });
 
 export const getters = {
+  getInitialized(state) {
+    return state.initialized
+  },
   getLangIndex(state) {
     return state.langIndex;
   },
@@ -41,6 +45,9 @@ export const getters = {
 };
 
 export const mutations = {
+  setInitialized(state, value) {
+    state.initialized = value
+  },
   setLangIndex(state, data) {
     state.langIndex = data;
   },

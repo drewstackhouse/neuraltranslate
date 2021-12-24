@@ -21,8 +21,14 @@ export default {
     pendingInput: "",
     debounceTime: 100,
   }),
+  mounted() {
+
+  },
   created: function () {
     this.debounceInput = debounce(this.setInput, this.debounceTime);
+    if (!this.initialized) {
+     this.$router.push({name:"index"})
+    }
   },
   computed: {
     mobileLayout() {
@@ -36,6 +42,7 @@ export default {
       targetOptions: "getTargetOptions",
       swapEnabled: "getSwapEnabled",
       input: "getInput",
+      initialized: "getInitialized"
     }),
   },
   methods: {

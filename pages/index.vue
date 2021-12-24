@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapMutations, mapGetters } from "vuex";
 
 export default {
   data: () => ({
@@ -67,45 +67,19 @@ export default {
   computed: {
     ...mapGetters({
       pairCodes: "getPairCodes",
+      initialized: "getInitialized"
     }),
     mobile() {
       return this.$vuetify.breakpoint.name === "xs";
     },
   },
   methods: {
+    ...mapMutations([
+      "setInitialized"
+    ]),
     sleep(ms) {
       return new Promise((res) => setTimeout(res, ms));
     },
-
-/*    async translate(text, pairCode) {
-      try {
-        const res = await this.$axios.get(
-          `${this.$axios.defaults.baseURL}${pairCode}?text=${text}`
-        );
-        return res.data.translation;
-      } catch (e) {
-        console.error(`Something went wrong: ${e}`);
-        return "";
-      }
-    },
-
-    async initTranslate() {
-      try {
-        const startTime = Date.now();
-        const translations = this.pairCodes.map(async (code) =>
-          this.translate("Hello.", code)
-        );
-        await Promise.all(translations);
-        const endTime = Date.now();
-        console.log(
-          `Round-trip initialization took ${
-            (endTime - startTime) / 1000
-          } seconds.`
-        );
-      } catch (e) {
-        console.error(`Something went wrong during initialization: ${e}`);
-      }
-    }, */
   },
 
   async beforeCreate() {
@@ -115,8 +89,8 @@ export default {
   async created() {
     await this.sleep(500);
     this.showIntro = true;
-    //await this.initTranslate();
     await this.$store.dispatch('initTranslate');
+    await this.setInitialized(true);
     this.$router.push({ name: "translate" });
   },
 };
