@@ -91,7 +91,9 @@ export const actions = {
 
   async setInputAndTranslate({ commit, dispatch}, input) {
     await commit('setInput', input);
+    if (input) {
     await dispatch('translateInput');
+    }
   },
   async loadLanguages({ commit, dispatch }) {
     const res = await this.$axios.get(
