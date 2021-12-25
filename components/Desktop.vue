@@ -4,7 +4,7 @@
     <p>input: {{input}}</p>
     <p>parts: {{parts}}</p>
     <p>oldParts: {{oldParts}}</p>
-    <p>toTranslate: {{toTranslate}}</p>
+    
     </v-col>
     <v-col cols="1"></v-col>
     <v-col>
@@ -174,13 +174,16 @@ export default {
     parts: [],
     oldParts: [],
     toTranslate: [],
+    lastBatch: [],
+    batch: [],
+    res: null
   }),
   created: function () {
     this.debounceInput = debounce(
       this.dispatchSetInputAndTranslate,
       this.debounceTime
     );
-    this.warmLambdas = setInterval(this.dispatchInitTranslate, 30000);
+    //this.warmLambdas = setInterval(this.dispatchInitTranslate, 30000);
   },
   computed: {
 
@@ -245,14 +248,11 @@ export default {
     }
   },
 
-  updateParts(newText) {
+  async updateParts(newText) {
     this.oldParts = this.parts;
-    this.parts = newText ? newText.split(/(?<=[?!.,])/).map(p => p.trim()) : {}
+    this.parts = newText ? newText.split(/(?<=[?!.,])/).map(p => p.trim()) : []
 
-    
-    },
-
-  },
+  }},
   watch: {
     pendingInput: function (newInput) {
       if (newInput) {
