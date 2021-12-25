@@ -4,6 +4,7 @@
     <p>input: {{input}}</p>
     <p>parts: {{parts}}</p>
     <p>oldParts: {{oldParts}}</p>
+    <p>toTranslate: {{toTranslate}}</p>
     </v-col>
     <v-col cols="1"></v-col>
     <v-col>
@@ -246,7 +247,9 @@ export default {
 
   updateParts(newText) {
     this.oldParts = this.parts;
-    this.parts = newText ? {...newText.split(/(?<=[?!.,])/).map(p => p.trim())} : ''
+    this.parts = newText ? newText.split(/(?<=[?!.,])/).map(p => p.trim()) : {}
+
+    
     },
 
   },
