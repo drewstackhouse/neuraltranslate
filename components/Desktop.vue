@@ -1,5 +1,10 @@
 <template>
   <v-row align="center" justify="center">
+    <v-col cols="12">
+    <p>input: {{input}}</p>
+    <p>parts: {{parts}}</p>
+    <p>oldParts: {{oldParts}}</p>
+    </v-col>
     <v-col cols="1"></v-col>
     <v-col>
       <v-card
@@ -128,7 +133,6 @@
             ></v-textarea>
             <v-row class="text-right mr-3">
               <v-col>
-                <v-btn large icon><v-icon>mdi-heart-outline</v-icon></v-btn>
                 <v-btn @click="copyToClipboard" large icon
                   ><v-icon>mdi-content-copy</v-icon></v-btn
                 >
@@ -149,6 +153,8 @@
       </v-card>
     </v-col>
     <v-col cols="1"></v-col>
+    <v-col cols="12"></v-col>
+    <v-col cols="12"></v-col>
   </v-row>
 </template>
 
@@ -164,15 +170,19 @@ export default {
     showTargetLangs: false,
     copiedSnackbar: false,
     snackbarText: "",
+    parts: [],
+    oldParts: [],
+    toTranslate: [],
   }),
   created: function () {
     this.debounceInput = debounce(
       this.dispatchSetInputAndTranslate,
       this.debounceTime
     );
-    const warmLambdas = setInterval(this.dispatchInitTranslate, 30000);
+    this.warmLambdas = setInterval(this.dispatchInitTranslate, 30000);
   },
   computed: {
+
     ...mapGetters({
       availableLangs: "getAvailableLangs",
       sourceLang: "getSourceLang",
@@ -207,7 +217,9 @@ export default {
         targetObj: target,
       };
       await this.$store.dispatch("updateLanguages", payload);
+      if (this.pendingInput) {
       this.dispatchSetInputAndTranslate(this.input);
+      };
       this.showSourceLangs = false;
       this.showTargetLangs = false;
     },
@@ -215,6 +227,7 @@ export default {
       this.$store.dispatch("initTranslate");
     },
     copyToClipboard() {
+      if (this.output) {
       navigator.clipboard
         .writeText(this.output)
         .then(() => {
@@ -225,7 +238,17 @@ export default {
           this.snackbarText = "Sorry, we can't copy that right now."
           this.copiedSnackbar = true;
         });
+    } else {
+      this.snackbarText = "Nothing to copy.";
+      this.copiedSnackbar = true;
+    }
+  },
+
+  updateParts(newText) {
+    this.oldParts = this.parts;
+    this.parts = newText ? {...newText.split(/(?<=[?!.,])/).map(p => p.trim())} : ''
     },
+
   },
   watch: {
     pendingInput: function (newInput) {
@@ -235,6 +258,9 @@ export default {
         this.setOutput("");
       }
     },
+    input: function (newInput) {
+      this.updateParts(newInput);
+    }
   },
 };
 </script>
