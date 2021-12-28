@@ -1,9 +1,7 @@
 <template>
   <v-row>
       <v-col>
-          <v-textarea v-model="input"></v-textarea>
-          <v-btn>Translate</v-btn>
-          <br><br><br>
+          <v-card><v-card-title class="text-h4">About Neural Translate</v-card-title></v-card>
       </v-col>
   </v-row>
 </template>
