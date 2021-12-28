@@ -8,7 +8,9 @@ export const state = () => ({
   pairCodes: null,
   input: null,
   output: null,
+  parts: [],
   initialized: false,
+  history: {},
 });
 
 export const getters = {
@@ -42,9 +44,23 @@ export const getters = {
   getOutput(state) {
     return state.output;
   },
+  getHistory(state) {
+    return state.history
+  }
 };
 
 export const mutations = {
+  setEmptyHistory(state) {
+    let history = {};
+    state.pairCodes.forEach(code => history[code] = {});
+    state.history = history;
+  },
+  addToHistory(state, payload) {
+    const pairCode = payload.pairCode
+    const inp = payload.inp;
+    const out = payload.out;
+    state.history[pairCode][inp] = out
+  },
   setInitialized(state, value) {
     state.initialized = value
   },
@@ -96,10 +112,16 @@ export const mutations = {
 
 export const actions = {
 
-  async setInputAndTranslate({ commit, dispatch}, input) {
+  async setInputAndTranslate({ state, commit, dispatch}, input) {
     await commit('setInput', input);
     if (input) {
-    await dispatch('translateInput');
+    //await dispatch('translateInput');
+    const pairCode = `${state.sourceLang.code}${state.targetLang.code}`;
+    let parts = state.input ? state.input.split(/(?<=[?!.,])/) : [];
+    parts = parts.filter(part => part.trim().length);
+    const translations = parts.map(part => dispatch('translate', {text: part, pairCode:pairCode}));
+    const res = await Promise.all(translations);
+    commit('setOutput', res.join(' '));
     }
   },
   async loadLanguages({ commit, dispatch }) {
@@ -144,34 +166,34 @@ export const actions = {
       );
     }
     await commit("setPairCodes", pairCodes);
+    await commit("setEmptyHistory");
+
   },
 
   async translateInput({ commit, dispatch, state }) {
     const input = state.input;
     const pair = `${state.sourceLang.code}${state.targetLang.code}`;
-    //const requestURL = `${this.$axios.defaults.baseURL}${pairCode}?text=${input}`
 
-    //try {
-    //  const res = await this.$axios.get(requestURL);
-    //  const translation = res.data.translation;
-    //  commit('setOutput', translation)
-    //} catch (e) {
-    //  console.error(`Something went wrong: ${e}`);
-     // return "";
-    //}
     const payload = {text:input, pairCode:pair};
     const translation = await dispatch('translate', payload);
     commit('setOutput', translation)
   },
 
-  async translate({state}, payload) {
+  async translate({state, commit}, payload) {
+
     const input = payload.text;
     const pairCode = payload.pairCode;
+
+    if (Object.keys(state.history[pairCode]).includes(input)) {
+      return state.history[pairCode][input]
+    }
+
     const requestURL = `${this.$axios.defaults.baseURL}${pairCode}?text=${input}`
 
     try {
       const res = await this.$axios.get(requestURL);
       const translation = res.data.translation;
+      commit('addToHistory', {inp: input, out: translation, pairCode: pairCode});
       return translation
     } catch (e) {
       console.error(`Something went wrong: ${e}`);

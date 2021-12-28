@@ -2,8 +2,6 @@
   <v-row align="center" justify="center">
     <v-col cols="12">
     <p>input: {{input}}</p>
-    <p>parts: {{parts}}</p>
-    <p>oldParts: {{oldParts}}</p>
     
     </v-col>
     <v-col cols="1"></v-col>
@@ -171,12 +169,6 @@ export default {
     showTargetLangs: false,
     copiedSnackbar: false,
     snackbarText: "",
-    parts: [],
-    oldParts: [],
-    toTranslate: [],
-    lastBatch: [],
-    batch: [],
-    res: null
   }),
   created: function () {
     this.debounceInput = debounce(
@@ -195,6 +187,8 @@ export default {
       targetOptions: "getTargetOptions",
       input: "getInput",
       output: "getOutput",
+      pairCodes: "getPairCodes",
+      history: "getHistory"
     }),
     swapEnabled() {
       return (
@@ -247,12 +241,7 @@ export default {
       this.copiedSnackbar = true;
     }
   },
-
-  async updateParts(newText) {
-    this.oldParts = this.parts;
-    this.parts = newText ? newText.split(/(?<=[?!.,])/).map(p => p.trim()) : []
-
-  }},
+},
   watch: {
     pendingInput: function (newInput) {
       if (newInput) {
@@ -261,9 +250,6 @@ export default {
         this.setOutput("");
       }
     },
-    input: function (newInput) {
-      this.updateParts(newInput);
-    }
   },
 };
 </script>
