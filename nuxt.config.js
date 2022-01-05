@@ -56,7 +56,7 @@ export default {
     treeShake: false,
     customVariables: ['~/assets/variables.scss'],
     theme: {
-      dark: true,
+      dark: false,
       themes: {
         light: {
           primary: '284b63',

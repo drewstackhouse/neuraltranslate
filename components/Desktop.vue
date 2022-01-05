@@ -6,7 +6,7 @@
     <v-col>
       <v-card
         flat
-        outlined
+        style="border: 2px solid #263238"
         tile
         class="ma-0 pa-0"
         v-if="sourceLang && targetLang"
@@ -19,7 +19,7 @@
               text
               tile
               block
-              :color="showSourceLangs ? 'red accent-1' : ''"
+              :color="showSourceLangs ? 'amber darken-4' : ''"
               >{{
                 showSourceLangs ? "Select Language" : sourceLang.language
               }}</v-btn
@@ -33,6 +33,7 @@
               block
               icon
               :disabled="!swapEnabled"
+              color="amber darken-4"
               @click="dispatchSwapLangsAndTranslate"
               ><v-icon>mdi-swap-horizontal</v-icon></v-btn
             ></v-col
@@ -44,7 +45,7 @@
               text
               tile
               block
-              :color="showTargetLangs ? 'red accent-1' : ''"
+              :color="showTargetLangs ? 'amber darken-4' : ''"
               >{{
                 showTargetLangs ? "Select Language" : targetLang.language
               }}</v-btn
@@ -96,11 +97,12 @@
               no-resize
               solo
               flat
-              clearable
               class="text-h5 pa-3"
+              clearable
               placeholder="Start typing..."
               v-model="pendingInput"
-            ></v-textarea>
+            >
+            </v-textarea>
             <v-row>
               <v-col> </v-col>
             </v-row>
@@ -112,7 +114,7 @@
             v-if="!showSourceLangs && !showTargetLangs"
           />
           <v-col
-            :class="output ? 'grey darken-4 ma-0 pa-0' : 'ma-0 pa-0'"
+            :class="output ? 'grey lighten-4 ma-0 pa-0' : 'ma-0 pa-0'"
             cols="6"
             v-if="!showSourceLangs && !showTargetLangs"
           >
@@ -136,13 +138,23 @@
                 <v-snackbar left v-model="copiedSnackbar" timeout="1000">
                   {{snackbarText}}
                 </v-snackbar>
-                <v-btn large icon><v-icon>mdi-thumb-up-outline</v-icon></v-btn>
-                <v-btn large icon
+                <v-tooltip top>
+                <template v-slot:activator="{ on, attrs }">
+                  <span v-bind="attrs" v-on="on" class="pa-0 ma-0">
+                <v-btn color="amber darken-4" large icon disabled><v-icon>mdi-thumb-up-outline</v-icon></v-btn>
+                
+                                <v-btn large icon disabled
                   ><v-icon>mdi-thumb-down-outline</v-icon></v-btn
                 >
-                <v-btn large icon
+
+                
+                <v-btn large icon disabled
                   ><v-icon>mdi-share-variant-outline</v-icon></v-btn
                 >
+                
+                </span></template>
+                <span>Features coming soon!</span></v-tooltip>
+
               </v-col>
             </v-row>
           </v-col>

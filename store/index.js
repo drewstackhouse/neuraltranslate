@@ -146,10 +146,14 @@ export const actions = {
     await dispatch("updateLanguages", payload);
     await dispatch("loadPairCodes");
   },
-  async updateLanguages({ commit }, payload) {
+  async updateLanguages({ state, commit }, payload) {
     await commit("setSourceLang", payload.sourceObj);
     await commit("setTargetOptions");
-    await commit("setTargetLang", payload.targetObj);
+    if (state.targetOptions.includes(payload.targetObj)) {
+      await commit("setTargetLang", payload.targetObj);
+    } else {
+      await commit("setTargetLang", state.targetOptions[0])
+    }
   },
 
   async loadPairCodes({ commit, state }) {
