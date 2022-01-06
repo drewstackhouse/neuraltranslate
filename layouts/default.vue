@@ -6,7 +6,7 @@
       <v-container fluid fill-height>
         <v-row align="center">
           <v-col class="text-center">
-        <span class="text-h3 white--text font-weight-light"><v-icon style="font-size: 50px" color="amber darken-4" class="mx-6 mb-2">mdi-translate</v-icon>Neural Translate</span>
+        <span class="text-h3 white--text font-weight-light"><v-icon style="font-size: 50px" color="amber darken-4" class="mr-6 mb-2">mdi-translate</v-icon>Neural Translate</span>
           </v-col>
         </v-row>
       </v-container>

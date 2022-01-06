@@ -1,19 +1,9 @@
 <template>
   <v-container fluid fill-height v-if="showIntro">
-    <v-row align="center" justify="center"></v-row>
     <v-row align="center" justify="center">
-      <v-col cols="1"></v-col>
-      <v-col :cols="mobile ? 12 : 3" class="text-center">
-        <!--<v-card color="red accent-1" height="75"></v-card>-->
-        <v-img src="neuraltranslate.png" max-width="200" class="mx-auto" />
+      <v-col class="text-center" cols="12">
+        <span :class="mobile ? 'text-h5 font-weight-regular' : 'text-h3 font-weight-light'"><v-icon :style="mobile ? 'font-size: 30px' : 'font-size: 50px'" color="amber darken-4" :class="mobile ? 'mr-3 mb-2' : 'mr-6 mb-2'">mdi-translate</v-icon>Neural Translate</span>
       </v-col>
-      <v-col :cols="mobile ? 12 : ''" class="text-center">
-        <span :class="mobile ? 'text-h3' : 'text-h2'">Neural Translate</span>
-      </v-col>
-      <v-col cols="1"></v-col>
-    </v-row>
-    <v-row align="center" justify="center">
-      <v-col :cols="mobile ? 1 : 2"></v-col>
       <v-col class="text-center">
         <v-carousel
           reverse
@@ -36,17 +26,14 @@
             </p>
           </v-carousel-item>
         </v-carousel>
-        <v-progress-linear
-          height="20"
-          rounded
+        <v-progress-circular :size="mobile ? 100 : 200"
+          width="5"
           indeterminate
-          color="red accent-1"
-        ></v-progress-linear>
+          color="amber darken-4"
+        ></v-progress-circular>
       </v-col>
-      <v-col :cols="mobile ? 1 : 2"></v-col>
     </v-row>
     <v-row align="center" justify="center"></v-row>
-    <v-card flat height="100" v-if="mobile"></v-card>
   </v-container>
 </template>
 
@@ -95,7 +82,7 @@ export default {
     this.showIntro = true;
     await this.$store.dispatch('initTranslate');
     await this.setInitialized(true);
-    this.$router.push({ name: "translate" });
+    //this.$router.push({ name: "translate" });
 
     this.refresher = setInterval(this.dispatchInitTranslate, 30000)
   },
