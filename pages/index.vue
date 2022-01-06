@@ -80,6 +80,10 @@ export default {
     sleep(ms) {
       return new Promise((res) => setTimeout(res, ms));
     },
+    
+    async dispatchInitTranslate() {
+      await this.$store.dispatch('initTranslate')
+    },
   },
 
   async beforeCreate() {
@@ -92,6 +96,8 @@ export default {
     await this.$store.dispatch('initTranslate');
     await this.setInitialized(true);
     this.$router.push({ name: "translate" });
+
+    this.refresher = setInterval(this.dispatchInitTranslate, 30000)
   },
 };
 </script>

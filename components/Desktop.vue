@@ -1,7 +1,6 @@
 <template>
+<v-container fluid fill-height>
   <v-row align="center" justify="center">
-    <v-col cols="12">    
-    </v-col>
     <v-col cols="1"></v-col>
     <v-col>
       <v-card
@@ -16,6 +15,7 @@
             ><v-btn
               @click="showSourceLangs = !showSourceLangs"
               x-large
+              class="text-h6 font-weight-regular"
               text
               tile
               block
@@ -42,6 +42,7 @@
             ><v-btn
               @click="showTargetLangs = !showTargetLangs"
               x-large
+              class="text-h6 font-weight-regular"
               text
               tile
               block
@@ -61,10 +62,15 @@
                   <v-list-item
                     v-for="(src, i) in sourceOptions"
                     :key="i"
-                    class="py-3 px-12"
+                    class="py-2 px-12"
                     @click="updateLangs(src, targetLang)"
                   >
-                    {{ src.language }}
+                  <v-row>
+                    <v-col cols="1">
+                    <v-icon v-if="src === sourceLang">mdi-check</v-icon>
+                    </v-col>
+                    <v-col><span>{{ src.language }}</span></v-col>
+                  </v-row>
                   </v-list-item>
                 </v-list-item-group>
               </v-list>
@@ -77,10 +83,15 @@
                   <v-list-item
                     v-for="(tgt, i) in targetOptions"
                     :key="i"
-                    class="py-3 px-12"
+                    class="py-2 px-12"
                     @click="updateLangs(sourceLang, tgt)"
                   >
-                    {{ tgt.language }}
+                  <v-row>
+                    <v-col cols="1">
+                    <v-icon v-if="tgt === targetLang">mdi-check</v-icon>
+                    </v-col>
+                    <v-col><span>{{ tgt.language }}</span></v-col>
+                  </v-row>
                   </v-list-item>
                 </v-list-item-group>
               </v-list>
@@ -165,6 +176,7 @@
     <v-col cols="12"></v-col>
     <v-col cols="12"></v-col>
   </v-row>
+</v-container>
 </template>
 
 <script>
