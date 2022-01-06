@@ -6,7 +6,7 @@
       <v-container fluid fill-height>
         <v-row align="center">
           <v-col class="text-center">
-        <span class="text-h3 white--text font-weight-light"><v-icon style="font-size: 50px" color="amber darken-4" class="mr-6 mb-2">mdi-translate</v-icon>Neural Translate</span>
+        <span :class="mobile ? 'text-h4 white--text font-weight-light' : 'text-h3 white--text font-weight-light'"><v-icon :style="mobile ? 'font-size: 40px' : 'font-size: 50px'" color="amber darken-4" class="pr-3 mb-2">mdi-translate</v-icon>Neural Translate</span>
           </v-col>
         </v-row>
       </v-container>
@@ -14,7 +14,7 @@
       <v-fade-transition mode="out-in">
         <Nuxt />
       </v-fade-transition>
-      <v-footer height="75px" app color="blue-grey darken-4" v-if="$route.path !== '/'">
+      <v-footer height="75px" app color="blue-grey darken-4" v-if="$route.path !== '/' && !mobile">
       <v-container fluid fill-height>
         <v-row align="center" justify="center">
           <v-col class="text-center">
@@ -30,6 +30,11 @@
 <script>
 export default {
   data: () => ({}),
+  computed: {
+    mobile() {
+      return this.$vuetify.breakpoint.name === "xs";
+    },
+  }
 };
 </script>
 

@@ -2,7 +2,7 @@
   <v-container fluid fill-height v-if="showIntro">
     <v-row align="center" justify="center">
       <v-col class="text-center" cols="12">
-        <span :class="mobile ? 'text-h5 font-weight-regular' : 'text-h3 font-weight-light'"><v-icon :style="mobile ? 'font-size: 30px' : 'font-size: 50px'" color="amber darken-4" :class="mobile ? 'mr-3 mb-2' : 'mr-6 mb-2'">mdi-translate</v-icon>Neural Translate</span>
+        <span :class="mobile ? 'text-h5 font-weight-regular' : 'text-h3 font-weight-light'"><v-icon :style="mobile ? 'font-size: 30px' : 'font-size: 50px'" color="amber darken-4" :class="mobile ? 'pr-3 mb-2' : 'pr-6 mb-2'">mdi-translate</v-icon>Neural Translate</span>
       </v-col>
       <v-col class="text-center">
         <v-carousel
@@ -82,7 +82,7 @@ export default {
     this.showIntro = true;
     await this.$store.dispatch('initTranslate');
     await this.setInitialized(true);
-    //this.$router.push({ name: "translate" });
+    this.$router.push({ name: "translate" });
 
     this.refresher = setInterval(this.dispatchInitTranslate, 30000)
   },
