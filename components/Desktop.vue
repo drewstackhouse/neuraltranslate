@@ -5,7 +5,7 @@
     <v-col>
       <v-card
         flat
-        style="border: 2px solid #263238"
+        elevation="8"
         tile
         class="ma-0 pa-0"
         v-if="sourceLang && targetLang"
@@ -13,7 +13,7 @@
         <v-row class="text-center ma-0 pa-0" no-gutters>
           <v-col class="ma-0 pa-0" cols="5.5"
             ><v-btn
-              @click="showSourceLangs = !showSourceLangs"
+              @click="showTargetLangs = false; showSourceLangs = true"
               x-large
               class="text-h6 font-weight-regular"
               text
@@ -40,7 +40,7 @@
           >
           <v-col class="ma-0 pa-0" cols="5.5"
             ><v-btn
-              @click="showTargetLangs = !showTargetLangs"
+              @click="showSourceLangs = false; showTargetLangs = true"
               x-large
               class="text-h6 font-weight-regular"
               text
@@ -140,14 +140,18 @@
               placeholder="Translation"
               readonly
               :value="output"
-            ></v-textarea>
+            >
+            <template slot="append-outer">
+              <v-progress-circular indeterminate v-if="typing" color="amber darken-4"></v-progress-circular>
+            </template>
+            </v-textarea>
             <v-row class="text-right mr-3">
               <v-col>
                 <v-btn @click="copyToClipboard" large icon
-                  ><v-icon>mdi-content-copy</v-icon></v-btn
+                  ><v-icon color="amber darken-4">mdi-content-copy</v-icon></v-btn
                 >
-                <v-snackbar left v-model="copiedSnackbar" timeout="1000">
-                  {{snackbarText}}
+                <v-snackbar bottom v-model="copiedSnackbar" timeout="1000" color="rgba(255, 111, 0, 0.5)" class="font-weight-bold">
+                  <span class="text-h5 ma-3">{{snackbarText}}</span>
                 </v-snackbar>
                 <v-tooltip top>
                 <template v-slot:activator="{ on, attrs }">
@@ -173,8 +177,6 @@
       </v-card>
     </v-col>
     <v-col cols="1"></v-col>
-    <v-col cols="12"></v-col>
-    <v-col cols="12"></v-col>
   </v-row>
 </v-container>
 </template>
@@ -185,8 +187,9 @@ import { debounce } from "lodash";
 
 export default {
   data: () => ({
+    typing: false,
     pendingInput: "",
-    debounceTime: 100,
+    debounceTime: 250,
     showSourceLangs: false,
     showTargetLangs: false,
     copiedSnackbar: false,
@@ -224,6 +227,7 @@ export default {
   methods: {
     ...mapMutations(["swapLangs", "setInput", "setOutput"]),
     dispatchSetInputAndTranslate(inp) {
+      this.typing = false;
       this.$store.dispatch("setInputAndTranslate", inp);
     },
     dispatchSwapLangsAndTranslate() {
@@ -251,7 +255,7 @@ export default {
       navigator.clipboard
         .writeText(this.output)
         .then(() => {
-          this.snackbarText = "Translation copied to clipboard"
+          this.snackbarText = "Translation copied to clipboard!"
           this.copiedSnackbar = true;
         })
         .catch((err) => {
@@ -267,6 +271,7 @@ export default {
   watch: {
     pendingInput: function (newInput) {
       if (newInput) {
+        this.typing = true;
         this.debounceInput(newInput);
       } else {
         this.setOutput("");
