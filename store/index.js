@@ -206,6 +206,10 @@ export const actions = {
   },
 
   async initTranslate({dispatch, state}) {
+
+    while (!state.pairCodes) {
+      // nothing
+    }
     
     try {
       const startTime = Date.now();

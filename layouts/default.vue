@@ -1,7 +1,6 @@
 <template>
   <v-app>
-    <!--<v-main class="grey darken-4">-->
-      <v-main class="">
+    <v-main class="grey darken-4">
       <v-app-bar color="blue-grey darken-4" v-if="$route.path !== '/'" flat app height="80">
       <v-container fluid>
         <v-row align="center">
