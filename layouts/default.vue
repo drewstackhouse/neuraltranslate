@@ -18,20 +18,20 @@
       <v-fade-transition mode="out-in">
         <Nuxt />
       </v-fade-transition>
-      <!--<v-footer app color="blue-grey darken-4" v-if="$route.path !== '/' && !mobile">
+      <v-footer app color="blue-grey darken-4" v-if="$route.path !== '/' && !mobile">
       <v-container fluid fill-height>
         <v-row align="center" justify="center">
-          <v-col class="">
+        <!--  <v-col class="">
         <span class="white--text font-weight-light text-body-1">Made by <a href="https://www.drewstackhouse.com" rel="noopener noreferrer" target="_blank" style="color: rgba(255, 111, 0, 1)">Drew Stackhouse</a></span>
-          </v-col>
-          <v-col class="text-right">
+          </v-col>-->
+          <v-col class="text-center">
         <v-btn icon><v-icon color="amber darken-4">mdi-twitter</v-icon></v-btn>
         <v-btn icon><v-icon color="amber darken-4">mdi-linkedin</v-icon></v-btn>
         <v-btn icon><v-icon color="amber darken-4">mdi-github</v-icon></v-btn>
           </v-col>
         </v-row>
       </v-container>
-      </v-footer>-->
+      </v-footer>
     </v-main>
   </v-app>
 </template>

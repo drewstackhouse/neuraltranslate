@@ -219,7 +219,7 @@ export const actions = {
       console.log(
         `%c Lambda invocations took ${
           (endTime - startTime) / 1000
-        } seconds.`, 'color: cyan'
+        } seconds.`, 'color: c .0yan'
       );
     } catch (e) {
       console.error(`Something went wrong during initialization: ${e}`);

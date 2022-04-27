@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
-    <mobile v-if="mobileLayout" />
-    <desktop v-else />
+    <mobile v-if="mobileLayout && showComponents" />
+    <desktop v-if="!mobileLayout && showComponents" />
   </v-container>
 </template>
 
@@ -20,6 +20,7 @@ export default {
   data: () => ({
     pendingInput: "",
     debounceTime: 100,
+    showComponents: false,
   }),
   async beforeCreate() {
     if (!this.pairCodes) {
@@ -31,6 +32,9 @@ export default {
     if (!this.initialized) {
      this.$router.push({name:"index"})
     }
+  },
+  mounted() {
+    this.showComponents = true;
   },
   computed: {
     mobileLayout() {
