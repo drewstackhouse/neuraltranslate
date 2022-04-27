@@ -22,11 +22,13 @@ export default {
     debounceTime: 100,
     showComponents: false,
   }),
+  /*
   async beforeCreate() {
     if (!this.pairCodes) {
     await this.$store.dispatch("loadLanguages");
     }
   },
+  */
   created: function () {
     this.debounceInput = debounce(this.setInput, this.debounceTime);
     if (!this.initialized) {

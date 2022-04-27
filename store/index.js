@@ -206,21 +206,23 @@ export const actions = {
   },
 
   async initTranslate({dispatch, state}) {
-    
     try {
       const startTime = Date.now();
       const translations = state.pairCodes.map(async (code) =>
         {
           let payload = {text:"Hello.", pairCode:code};
-          dispatch('translate', payload)
+          await dispatch('translate', payload);
+          console.log(`%c${code} is running`, 'color: cyan')
         }
       );
-      const endTime = Date.now();
-      console.log(
-        `%c Lambda invocations took ${
-          (endTime - startTime) / 1000
-        } seconds.`, 'color: c .0yan'
-      );
+        await Promise.all(translations).then(values => {
+        const endTime = Date.now();
+        console.log(
+          `%c\n--------------\n\nAll lambdas are running.\nInvocations took ${
+            (endTime - startTime) / 1000
+          } seconds.\n\n--------------\n`, 'color: lime'
+        );
+      });
     } catch (e) {
       console.error(`Something went wrong during initialization: ${e}`);
     }

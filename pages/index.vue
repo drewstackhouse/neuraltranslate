@@ -80,6 +80,7 @@ export default {
   async created() {
     await this.sleep(500);
     this.showIntro = true;
+    await this.$store.dispatch('loadPairCodes');
     await this.$store.dispatch('initTranslate');
     await this.setInitialized(true);
     this.$router.push({ name: "translate" });
