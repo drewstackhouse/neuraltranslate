@@ -256,9 +256,9 @@ export default {
   // METHODS ------------------------------------------------------------------
   methods: {
     ...mapMutations(["swapLangs", "setInput", "setOutput"]),
-    dispatchSetInputAndTranslate(inp) {
+    async dispatchSetInputAndTranslate(inp) {
+      await this.$store.dispatch("setInputAndTranslate", inp);
       this.typing = false;
-      this.$store.dispatch("setInputAndTranslate", inp);
     },
     dispatchSwapLangsAndTranslate() {
       this.swapLangs();
