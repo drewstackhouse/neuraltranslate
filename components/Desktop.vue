@@ -22,7 +22,7 @@
                 text
                 tile
                 block
-                :color="showSourceLangs ? 'amber darken-4' : ''"
+                :color="showSourceLangs ? 'light-green' : ''"
                 >{{
                   showSourceLangs ? "Select Language" : sourceLang.language
                 }}</v-btn
@@ -36,7 +36,7 @@
                 block
                 icon
                 :disabled="!swapEnabled"
-                color="amber darken-4"
+                color="light-green"
                 @click="dispatchSwapLangsAndTranslate"
                 ><v-icon>mdi-swap-horizontal</v-icon></v-btn
               ></v-col
@@ -52,7 +52,7 @@
                 text
                 tile
                 block
-                :color="showTargetLangs ? 'amber darken-4' : ''"
+                :color="showTargetLangs ? 'light-green' : ''"
                 >{{
                   showTargetLangs ? "Select Language" : targetLang.language
                 }}</v-btn
@@ -155,7 +155,7 @@
                   <v-progress-circular
                     indeterminate
                     v-if="typing"
-                    color="amber darken-4"
+                    color="light-green"
                   ></v-progress-circular>
                 </template>
               </v-textarea>
@@ -178,7 +178,7 @@
                   <v-tooltip top>
                     <template v-slot:activator="{ on, attrs }">
                       <span v-bind="attrs" v-on="on" class="pa-0 ma-0">
-                        <v-btn color="amber darken-4" large icon disabled
+                        <v-btn color="light-green" large icon disabled
                           ><v-icon>mdi-thumb-up-outline</v-icon></v-btn
                         >
 
