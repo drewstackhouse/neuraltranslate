@@ -162,7 +162,7 @@
               <v-row class="text-right mr-3">
                 <v-col>
                   <v-btn @click="copyToClipboard" large icon
-                    ><v-icon color="amber darken-4"
+                    ><v-icon color="light-green"
                       >mdi-content-copy</v-icon
                     ></v-btn
                   >
