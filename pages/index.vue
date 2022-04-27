@@ -84,7 +84,7 @@ export default {
     await this.setInitialized(true);
     this.$router.push({ name: "translate" });
 
-    this.refresher = setInterval(this.dispatchInitTranslate, 30000)
+    //this.refresher = setInterval(this.dispatchInitTranslate, 30000)
   },
 };
 </script>

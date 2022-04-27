@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid fill-height>
+  <v-container fluid>
     <mobile v-if="mobileLayout" />
     <desktop v-else />
   </v-container>
@@ -21,8 +21,10 @@ export default {
     pendingInput: "",
     debounceTime: 100,
   }),
-  mounted() {
-
+  async beforeCreate() {
+    if (!this.pairCodes) {
+    await this.$store.dispatch("loadLanguages");
+    }
   },
   created: function () {
     this.debounceInput = debounce(this.setInput, this.debounceTime);

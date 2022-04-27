@@ -206,10 +206,6 @@ export const actions = {
   },
 
   async initTranslate({dispatch, state}) {
-
-    while (!state.pairCodes) {
-      // nothing
-    }
     
     try {
       const startTime = Date.now();
@@ -219,12 +215,11 @@ export const actions = {
           dispatch('translate', payload)
         }
       );
-      await Promise.all(translations);
       const endTime = Date.now();
       console.log(
-        `Round-trip initialization took ${
+        `%c Lambda invocations took ${
           (endTime - startTime) / 1000
-        } seconds.`
+        } seconds.`, 'color: cyan'
       );
     } catch (e) {
       console.error(`Something went wrong during initialization: ${e}`);
