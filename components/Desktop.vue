@@ -118,8 +118,8 @@
                 no-resize
                 solo
                 flat
-                class="text-h5 pa-3"
                 clearable
+                class="text-h5 pa-3"
                 placeholder="Start typing..."
                 v-model="pendingInput"
               >
@@ -170,8 +170,8 @@
                     bottom
                     v-model="copiedSnackbar"
                     timeout="1000"
-                    color="rgba(255, 111, 0, 0.5)"
-                    class="font-weight-bold"
+                    color="light-green"
+                    class="font-weight-bold mb-12 pb-12"
                   >
                     <span class="text-h5 ma-3">{{ snackbarText }}</span>
                   </v-snackbar>
