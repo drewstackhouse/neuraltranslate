@@ -168,7 +168,7 @@
                   >
                   <v-snackbar
                     bottom
-                    v-model="copiedSnackbar"
+                    v-model="copiedSnackbar" 
                     timeout="1000"
                     color="light-green"
                     class="font-weight-bold mb-12 pb-12"
