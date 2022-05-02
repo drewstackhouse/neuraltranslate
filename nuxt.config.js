@@ -9,7 +9,8 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - neuraltranslate',
+    //titleTemplate: '%s - neuraltranslate',
+    titleTemplate: 'Neural Translate',
     title: 'neuraltranslate',
     htmlAttrs: {
       lang: 'en'
