@@ -117,7 +117,8 @@ export const actions = {
     if (input) {
     //await dispatch('translateInput');
     const pairCode = `${state.sourceLang.code}${state.targetLang.code}`;
-    let parts = state.input ? state.input.split(/(?<=[?!.,])/) : [];
+    //let parts = state.input ? state.input.split(/(?<=[?!.,])/) : [];
+    let parts = state.input ? state.input.split(/[?!.,]/) : [];
     parts = parts.filter(part => part.trim().length);
     const translations = parts.map(part => dispatch('translate', {text: part, pairCode:pairCode}));
     const res = await Promise.all(translations);
