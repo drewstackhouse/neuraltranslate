@@ -44,11 +44,10 @@ export default {
   data: () => ({
     showIntro: false,
     messages: [
-      "Starting application...",
-      "Cychwyn cais ...",
-      "Запуск приложения ...",
-      "애플리케이션 시작 중...",
-      "Iniciando aplicativo ...",
+      "Starting application",
+      "Запуск приложения",
+      "애플리케이션 시작 중",
+      "Iniciando aplicativo",
     ],
   }),
   computed: {

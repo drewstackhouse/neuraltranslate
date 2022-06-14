@@ -118,7 +118,23 @@ export const actions = {
     //await dispatch('translateInput');
     const pairCode = `${state.sourceLang.code}${state.targetLang.code}`;
     //let parts = state.input ? state.input.split(/(?<=[?!.,])/) : [];
-    let parts = state.input ? state.input.split(/[?!.,]/) : [];
+    //// let parts = state.input ? state.input.split(/[?!.,]/) : [];
+    var parts = input.split(/([!?;:.,])/);
+    var odds = [];
+    var evens = [];
+    for (var i = 0; i < parts.length; i++) {
+    if (parts[i]) {
+      if (i % 2 == 0) {
+      evens.push(parts[i]);
+      } else {
+      odds.push(parts[i]);
+      }
+      }
+    }
+    parts = evens.map(function (e,i) {
+    return `${e}${odds[i]}`
+    });
+
     parts = parts.filter(part => part.trim().length);
     const translations = parts.map(part => dispatch('translate', {text: part, pairCode:pairCode}));
     const res = await Promise.all(translations);
