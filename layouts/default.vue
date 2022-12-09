@@ -1,7 +1,7 @@
 <template>
   <v-app dark>
-    <v-app-bar fixed app>
-      <v-toolbar-title>neuralTranslate</v-toolbar-title>
+    <v-app-bar fixed app flat class="transparent">
+      <v-toolbar-title></v-toolbar-title>
       <v-spacer />
       <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark">
         <v-icon>{{ $vuetify.theme.dark ? 'mdi-white-balance-sunny' : 'mdi-weather-night' }}</v-icon>
