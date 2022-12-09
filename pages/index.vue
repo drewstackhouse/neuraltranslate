@@ -4,10 +4,6 @@
       <input-area />
       <output-area />
     </v-row>
-    <v-row align="center" justify="center">
-      <attention-card />
-      <v-btn block @click="logTranslation">Log data to console</v-btn>
-    </v-row>
   </v-container>
 </template>
 
@@ -15,7 +11,6 @@
 
 import InputArea from "../components/InputArea.vue";
 import OutputArea from "../components/OutputArea.vue";
-import AttentionCard from "../components/AttentionCard.vue";
 
 import { mapMutations, mapGetters } from "vuex";
 
@@ -41,7 +36,6 @@ export default {
   components: {
     InputArea,
     OutputArea,
-    AttentionCard
   },
   methods: {
     ...mapMutations(["setLanguages", "setParameters", "setSl", "setTl"]),
