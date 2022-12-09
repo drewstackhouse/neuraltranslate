@@ -36,19 +36,19 @@
                     </span>
                 </v-tooltip>
                 <v-spacer />
-                <v-btn icon color="primary">
+                <v-btn disabled icon color="primary">
                     <v-icon>mdi-content-copy</v-icon>
                 </v-btn>
-                <v-btn icon color="primary">
+                <v-btn disabled icon color="primary">
                     <v-icon>mdi-thumb-up-outline</v-icon>
                 </v-btn>
-                <v-btn icon color="primary">
+                <v-btn disabled icon color="primary">
                     <v-icon>mdi-thumb-down-outline</v-icon>
                 </v-btn>
-                <v-btn icon color="primary">
+                <v-btn disabled icon color="primary">
                     <v-icon>mdi-share-variant</v-icon>
                 </v-btn>
-                <v-btn icon color="primary">
+                <v-btn disabled icon color="primary">
                     <v-icon>mdi-brain</v-icon>
                 </v-btn>
             </v-card-actions>

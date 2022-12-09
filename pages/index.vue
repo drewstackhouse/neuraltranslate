@@ -39,9 +39,6 @@ export default {
   },
   methods: {
     ...mapMutations(["setLanguages", "setParameters", "setSl", "setTl"]),
-    logTranslation() {
-      console.log({...this.$store.state.translation});
-    }
   },
   computed: {
     ...mapGetters({

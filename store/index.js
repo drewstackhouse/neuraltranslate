@@ -64,6 +64,7 @@ export const mutations = {
 }
 
 export const actions = {
+    
     async doTranslate({ state, commit }, val) {
 
         if (!val) {
